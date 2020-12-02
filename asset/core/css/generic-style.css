@@ -1,0 +1,113 @@
+/* Generic CSS Class */
+.hide {
+  display: none;
+}
+
+/* Margin Properties */
+.margin-top-xs {
+  margin-top: 10px;
+}
+
+.margin-top-sm {
+  margin-top: 20px;
+}
+
+.margin-top, .margin-top-md {
+  margin-top: 30px;
+}
+
+.margin-top-lg{
+  margin-top: 40px;
+}
+
+.margin-bottom-xs {
+  margin-bottom: 10px;
+}
+
+.margin-bottom-sm {
+  margin-bottom: 20px;
+}
+
+.margin-bottom, .margin-bottom-md {
+  margin-bottom: 30px;
+}
+
+.margin-bottom-lg{
+  margin-bottom: 40px;
+}
+
+/* Generic Text Transform Properties */
+.lowercase {
+  text-transform: lowercase !important;
+}
+.uppercase {
+  text-transform: uppercase !important;
+}
+.capitalize {
+  text-transform: capitalize !important;
+}
+
+/* Generic Form Management Style */
+.form-control-feedback {
+  width: 15px;
+  position: absolute;
+  top: 40px;
+  right: 20px;
+}
+.error-icon, .error-text {
+  color: #e74c3c;
+}
+.error-text {
+  font-size: 14px;
+}
+/* BS Modal Modifications */
+.modal .header {
+  font-size: 22px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.modal .para-text {
+  font-size: 14px;
+}
+.modal form {
+  padding: 0px 20px;
+}
+.modal .form-control-feedback {
+  top: 40px;
+  right: 37px;
+}
+.modal button.close {
+  font-size: 10px;
+  background-color: #d43f3a;
+  padding: 10.5px 12px 11px 12px;
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #fff;
+  opacity: 1;
+  z-index: 10;
+  border: 1px solid #d43f3a;
+}
+.modal button.close:hover {
+  color: #d43f3a !important;
+  background-color: #fff;
+}
+
+.modal .btn-container .btn {
+  background-color: #5a95f5;
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  padding: 6px 15px;
+  border: 1px solid #5a95f5;
+}
+.modal .btn-container .btn:hover {
+  background-color: #fff;
+  color: #5a95f5;
+}
+
+/* Customize CSS to Prevent No Content Error */
+.app::before {
+  height: 0;
+}
