@@ -44,7 +44,9 @@
         SET FK_request_stat = (
           SELECT PK_status FROM status 
           WHERE stat_desc = "saved" AND type = "RQ"
-        )
+        ), 
+        FK_poster = 0,
+        date_posted = NULL
         WHERE pk_item_code_req = "' . $recordId -> value . '"
       ';
 

@@ -62,6 +62,8 @@
           SELECT PK_status FROM status 
           WHERE stat_desc = "posted" AND type = "RQ" 
         ),
+        FK_poster = "' . $_SESSION['userId'] . '",
+        date_posted = "' . date('Y-m-d') . '",
         FK_verify_stat = (
           SELECT PK_status FROM status 
           WHERE stat_desc = "pending" AND type = "VF" 

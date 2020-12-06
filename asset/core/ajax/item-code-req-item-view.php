@@ -41,7 +41,17 @@
 
       $recordRow;
       $transactQry = '
-        SELECT item_desc as item_desc, (' . $sUnitQry . ') as s_unit, (' . $bUnitQry . ') as b_unit, conv as conv, (' . $itemCategQry . ') as item_categ, (' . $itemGrpQry . ') as item_grp, item_code as item_code, isExisting as isExisting, (' . $codePrefixQry . ') as itemcode_prefix
+        SELECT 
+          item_desc as item_desc
+          , (' . $sUnitQry . ') as s_unit
+          , (' . $bUnitQry . ') as b_unit
+          , conv as conv
+          , (' . $itemCategQry . ') as item_categ
+          , (' . $itemGrpQry . ') as item_grp
+          , item_code as item_code
+          , isExisting as isExisting
+          , (' . $codePrefixQry . ') as itemcode_prefix
+          , unit_cost as unit_cost
         FROM item_code
         WHERE PK_item_code = "' . $recordId -> value . '"
       ';
@@ -73,18 +83,37 @@
             <div class="col-sm-12 item-code-req-item-mgmt">
               
               <div class="row">
-                <label for="" class="text-left control-label col-sm-12">Item Description : </label>
-                <div class="form-group col-sm-12">
-                  <input class="form-control" value="' . $recordRow['item_desc'] . '" readonly>
+                <div class="col-sm-6">
+                  <div class="row">
+                     <label for="" class="text-left control-label col-sm-12">Item Code : </label>
+                    <div class="form-group col-sm-12">
+                      <input name="itemCode" class="form-control" readonly value="' . $recordRow['item_code'] . '">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label for="" class="text-left control-label col-sm-12">Unit Cost : </label>
+                    <div class="form-group col-sm-12">
+                      <input name="unitCost" class="form-control" readonly value="' . $recordRow['unit_cost'] . '">
+                    </div>
+                  </div>
                 </div>
               </div>
 
+              <div class="row">
+                <label for="" class="text-left control-label col-sm-12">Item Description : </label>
+                <div class="form-group col-sm-12">
+                  <input name="itemDesc" class="form-control" readonly value="' . $recordRow['item_desc'] . '">
+                </div>
+              </div>
+              
               <div class="row">
                 <div class="col-sm-4">
                   <div class="row">
                     <label for="" class="text-left control-label col-sm-12">Small Unit : </label>
                     <div class="form-group col-sm-12">
-                      <input class="form-control" value="' . $recordRow['s_unit'] . '" readonly>
+                      <input name="itemDesc" class="form-control" readonly value="' . $recordRow['s_unit'] . '">
                     </div>
                   </div>
                 </div>
@@ -92,7 +121,7 @@
                   <div class="row">
                     <label for="" class="text-left control-label col-sm-12">Big Unit : </label>
                     <div class="form-group col-sm-12">
-                      <input class="form-control" value="' . $recordRow['b_unit'] . '" readonly>
+                      <input name="itemDesc" class="form-control" readonly value="' . $recordRow['b_unit'] . '">
                     </div>
                   </div>
                 </div>
@@ -100,56 +129,37 @@
                   <div class="row">
                     <label for="" class="text-left control-label col-sm-12">Conversion : </label>
                     <div class="form-group col-sm-12">
-                      <input class="form-control" value="' . $recordRow['conv'] . '" readonly>
+                      <input name="conv" class="form-control" readonly value="' . $recordRow['conv'] . '">
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="row">
-                    <label for="" class="text-left control-label col-sm-12">Item Category : </label>
-                    <div class="form-group col-sm-12">
-                      <input class="form-control" value="' . $recordRow['item_categ'] . '" readonly>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="row">
-                    <label for="" class="text-left control-label col-sm-12">Item Group : </label>
-                    <div class="form-group col-sm-12">
-                      <input class="form-control" value="' . $recordRow['item_grp'] . '" readonly>
-                    </div>
-                  </div>
-                </div> 
-              </div>
-
+              
               <div class="row">
                 <div class="col-sm-4">
                   <div class="row">
                     <label for="" class="text-left control-label col-sm-12">Item Code Prefix : </label>
                     <div class="form-group col-sm-12">
-                      <input class="form-control" value="' . $recordRow['itemcode_prefix'] . '" readonly>
+                      <input name="conv" class="form-control" readonly value="' . $recordRow['itemcode_prefix'] . '">
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-4">
                   <div class="row">
-                    <label for="" class="text-left control-label col-sm-12">Item Status : </label>
+                    <label for="" class="text-left control-label col-sm-12">Item Group : </label>
                     <div class="form-group col-sm-12">
-                      <input class="form-control" value="' . $itemStat . '" readonly>
+                      <input name="conv" class="form-control" readonly value="' . $recordRow['item_grp'] . '">
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-4">
                   <div class="row">
-                    <label for="" class="text-left control-label col-sm-12">Item Code : </label>
+                    <label for="" class="text-left control-label col-sm-12">Item Category : </label>
                     <div class="form-group col-sm-12">
-                      <input class="form-control" value="' . $itemCode . '" readonly>
+                      <input name="conv" class="form-control" readonly value="' . $recordRow['item_categ'] . '">
                     </div>
                   </div>
-                </div> 
+                </div>
               </div>
 
             </div>

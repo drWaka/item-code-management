@@ -17,17 +17,20 @@
   if (
     isset($_POST['recordId']) && isset($_POST['itemRecId']) && isset($_POST['itemDesc']) && 
     isset($_POST['sUnit']) && isset($_POST['bUnit']) && isset($_POST['conv']) && 
-    isset($_POST['itemCateg']) && isset($_POST['itemGrp']) && isset($_POST['prefixId'])
+    isset($_POST['itemCateg']) && isset($_POST['itemGrp']) && isset($_POST['prefixId']) &&
+    isset($_POST['itemCode']) && isset($_POST['unitCost'])
   ) {
     $recordId  = new form_validation($_POST['recordId'], 'str-int', 'Item Code ID', true);
     $itemRecId = new form_validation($_POST['itemRecId'], 'int', 'Item Code Request ID', true);
     $itemDesc  = new form_validation($_POST['itemDesc'], 'str-int', 'Item Description', true);
+    $itemCode  = new form_validation($_POST['itemCode'], 'str-int', 'Item Code', false);
     $sUnit     = new form_validation($_POST['sUnit'], 'int', 'Small Unit', true);
     $bUnit     = new form_validation($_POST['bUnit'], 'int', 'Big Unit', true);
     $conv      = new form_validation($_POST['conv'], 'int', 'Conversion', true);
     $itemCateg = new form_validation($_POST['itemCateg'], 'int', 'Item Category', true);
     $itemGrp   = new form_validation($_POST['itemGrp'], 'int', 'Item Group', true);
     $prefixId  = new form_validation($_POST['prefixId'], 'int', 'Item Code Prefix', true);
+    $unitCost  = new form_validation($_POST['unitCost'], 'double', 'Unit Cost', true);
 
     // Variable that will handle the item details if it exists at Bizbox DB
      $itemExistBB = array(
@@ -38,7 +41,8 @@
     if (
       $recordId -> valid == 1 && $itemRecId -> valid == 1 && $itemDesc -> valid == 1 && 
       $sUnit -> valid == 1 && $bUnit -> valid == 1 && $conv -> valid == 1 && 
-      $itemCateg -> valid == 1 && $itemGrp -> valid == 1 && $prefixId -> valid == 1
+      $itemCateg -> valid == 1 && $itemGrp -> valid == 1 && $prefixId -> valid == 1 &&
+      $itemCode -> valid == 1 && $unitCost -> valid
     ) {
       // Item Code ID Validation
       if (is_numeric($recordId -> value)) {
@@ -60,7 +64,8 @@
     if (
       $recordId -> valid == 1 && $itemRecId -> valid == 1 && $itemDesc -> valid == 1 && 
       $sUnit -> valid == 1 && $bUnit -> valid == 1 && $conv -> valid == 1 && 
-      $itemCateg -> valid == 1 && $itemGrp -> valid == 1 && $prefixId -> valid == 1
+      $itemCateg -> valid == 1 && $itemGrp -> valid == 1 && $prefixId -> valid == 1 &&
+      $itemCode -> valid == 1 && $unitCost -> valid
     ) {
       // Item Code Requets ID Validation
       if (is_numeric($itemRecId -> value)) {
@@ -80,7 +85,8 @@
     if (
       $recordId -> valid == 1 && $itemRecId -> valid == 1 && $itemDesc -> valid == 1 && 
       $sUnit -> valid == 1 && $bUnit -> valid == 1 && $conv -> valid == 1 && 
-      $itemCateg -> valid == 1 && $itemGrp -> valid == 1 && $prefixId -> valid == 1
+      $itemCateg -> valid == 1 && $itemGrp -> valid == 1 && $prefixId -> valid == 1 &&
+      $itemCode -> valid == 1 && $unitCost -> valid
     ) {
       // Verify Item Description
       if (strlen(htmlspecialchars_decode($itemDesc -> value)) > 40) {
@@ -123,7 +129,8 @@
     if (
       $recordId -> valid == 1 && $itemRecId -> valid == 1 && $itemDesc -> valid == 1 && 
       $sUnit -> valid == 1 && $bUnit -> valid == 1 && $conv -> valid == 1 && 
-      $itemCateg -> valid == 1 && $itemGrp -> valid == 1 && $prefixId -> valid == 1
+      $itemCateg -> valid == 1 && $itemGrp -> valid == 1 && $prefixId -> valid == 1 &&
+      $itemCode -> valid == 1 && $unitCost -> valid
     ) {
       $modalLbl = array(
         "present" => '',
@@ -142,11 +149,13 @@
           INSERT INTO item_code (
             item_desc, FK_sunit, FK_bunit, 
             conv, FK_item_categ, FK_item_group, 
-            FK_item_code_req, FK_itemcode_prefix
+            FK_item_code_req, FK_itemcode_prefix, item_code,
+            unit_cost
           ) VALUES (
             "' . $itemDesc -> value . '", "' . $sUnit -> value . '", "' . $bUnit -> value . '",
             "' . $conv -> value . '", "' . $itemCateg -> value . '", "' . $itemGrp -> value . '",
-            "' . $itemRecId -> value . '", "' . $prefixId -> value . '"
+            "' . $itemRecId -> value . '", "' . $prefixId -> value . '", "' . $itemCode -> value . '",
+            "' . $unitCost -> value . '"
           )
         ';
       } else {
@@ -158,12 +167,14 @@
         $transactQry = '
           UPDATE item_code
           SET item_desc = "' . $itemDesc -> value . '",
-          FK_sunit = "' . $sUnit -> value . '",
-          FK_bunit = "' . $bUnit -> value . '",
-          conv = "' . $conv -> value . '",
-          FK_item_categ = "' .$itemCateg -> value  . '",
-          FK_item_group = "' . $itemGrp -> value . '",
-          FK_itemcode_prefix = "' . $prefixId -> value . '"
+              FK_sunit = "' . $sUnit -> value . '",
+              FK_bunit = "' . $bUnit -> value . '",
+              conv = "' . $conv -> value . '",
+              FK_item_categ = "' .$itemCateg -> value  . '",
+              FK_item_group = "' . $itemGrp -> value . '",
+              FK_itemcode_prefix = "' . $prefixId -> value . '",
+              item_code = "' . $itemCode -> value . '",
+              unit_cost = "' . $unitCost -> value . '"
           WHERE PK_item_code = "' . $recordId -> value . '"
         ';
       }
@@ -252,6 +263,9 @@
         $itemCategErr = new error_handler($itemCateg -> err_msg);
         $itemGrpErr   = new error_handler($itemGrp -> err_msg);
         $prefixIdErr  = new error_handler($prefixId -> err_msg);
+        $prefixIdErr  = new error_handler($prefixId -> err_msg);
+        $itemCodeErr  = new error_handler($itemCode -> err_msg);
+        $unitCostErr  = new error_handler($unitCost -> err_msg);
 
         $bigUnitSelect = $smallUnitSelect = '';
         $unitQry = 'SELECT * FROM uom';
@@ -268,7 +282,7 @@
         }
 
         $itemCategSelect = '';
-        $itemCategQry = 'SELECT * FROM item_categ ORDER BY item_categ_desc';
+        $itemCategQry = 'SELECT * FROM item_categ WHERE FK_item_group = "' . $itemGrp -> value . '" ORDER BY item_categ_desc';
         $itemCategRes = $connection -> query($itemCategQry);
 
         if ($itemCategRes -> num_rows > 0) {
@@ -276,6 +290,8 @@
             $itemCategSelected = $itemCateg -> value == $itemCategRow['PK_item_categ'] ? 'selected' : '';
             $itemCategSelect .= '<option value="' . $itemCategRow['PK_item_categ'] . '" ' . $itemCategSelected . '>' . $itemCategRow['item_categ_desc'] . '</option>';
           }
+        } else {
+          $itemCategSelect .= '<option value="">Choose a Valid Item Group</option>';
         }
 
         $itemGrpSelect = '';
@@ -312,6 +328,29 @@
                 <input type="text" name="recordId" hidden="hidden" value="' . $recordId -> value . '">
                 <input type="text" name="itemRecId" hidden="hidden" value="' . $itemRecId -> value . '">
               
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <label for="" class="text-left control-label col-sm-12">Item Code : </label>
+                      <div class="form-group col-sm-12 ' . $itemCodeErr -> error_class . '">
+                        <input name="itemCode" class="form-control" value="' . $itemCode -> value . '" placeholder="Use For MPHHI Items Only">
+                        ' . $itemCodeErr -> error_icon . '
+                        ' . $itemCodeErr -> error_text . '
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <label for="" class="text-left control-label col-sm-12">Unit Cost : </label>
+                      <div class="form-group col-sm-12 ' . $unitCostErr -> error_class . '">
+                        <input name="unitCost" class="form-control" value="' . $unitCost -> value . '" placeholder="Unit Cost">
+                        ' . $unitCostErr -> error_icon . '
+                        ' . $unitCostErr -> error_text . '
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="row">
                   <label for="" class="text-left control-label col-sm-12">Item Description : </label>
                   <div class="form-group col-sm-12 ' . $itemDescErr -> error_class . '">
@@ -364,25 +403,12 @@
                   <div class="col-sm-4">
                     <div class="row">
                       <label for="" class="text-left control-label col-sm-12">Item Code Prefix : </label>
-                      <div class="form-group col-sm-12  ' . $prefixIdErr -> error_class . '">
+                      <div class="form-group col-sm-12 ' . $prefixIdErr -> error_class . '">
                         <select class="form-control" name="prefixId">
                           <option value="">Select Item Code Prefix</option>
                           ' . $itemcodePrefixSelect . ' </select>
-                          ' . $prefixIdErr -> error_class . '
-                          ' . $prefixIdErr -> error_class . '
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="row">
-                      <label for="" class="text-left control-label col-sm-12">Item Category : </label>
-                      <div class="form-group col-sm-12 ' . $itemCategErr -> error_class . '">
-                        <select class="form-control" name="itemCateg"> 
-                          <option value="">Select Item Category</option>
-                          ' . $itemCategSelect . ' 
-                        </select>
-                        ' . $itemCategErr -> error_icon . '
-                        ' . $itemCategErr -> error_text . '
+                          ' . $prefixIdErr -> error_icon . '
+                          ' . $prefixIdErr -> error_text . '
                       </div>
                     </div>
                   </div>
@@ -396,6 +422,18 @@
                         </select>
                         ' . $itemGrpErr -> error_icon . '
                         ' . $itemGrpErr -> error_text . '
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="row">
+                      <label for="" class="text-left control-label col-sm-12">Item Category : </label>
+                      <div class="form-group col-sm-12 ' . $itemCategErr -> error_class . '">
+                        <select class="form-control" name="itemCateg"> 
+                          ' . $itemCategSelect . ' 
+                        </select>
+                        ' . $itemCategErr -> error_icon . '
+                        ' . $itemCategErr -> error_text . '
                       </div>
                     </div>
                   </div>

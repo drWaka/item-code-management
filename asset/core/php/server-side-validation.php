@@ -8,10 +8,8 @@ class form_validation {
     if ($this -> test_empty($data, $label, $type, $required)) {
       if ($type == 'str') {
         $this -> test_str($data, $label);
-      } else if ($type == 'int') {
+      } else if ($type == 'int' || $type == 'double') {
         $this -> test_int($data, $label);
-      } else if ($type == 'double') {
-        $this -> test_double($data, $label);
       } else if ($type == 'str-int') {
         $this -> test_str_int($data, $label);
       } else if ($type == 'email') {

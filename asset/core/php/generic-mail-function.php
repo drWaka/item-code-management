@@ -25,6 +25,15 @@
     $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
     $mail->Port = $sysMailRecRow -> serv_port;            // TCP port to connect to
 
+    // SMTP Options to allow Self Signed Certs
+    $mail->SMTPOptions = array(
+        'ssl' => array(
+          'verify_peer' => false,
+          'verify_peer_name' => false,
+          'allow_self_signed' => true
+        )
+    );
+
     // Sender Info
     $mail->setFrom($sysMailRecRow -> email_addr, 'Item Code Management');
     $mail->addReplyTo($sysMailRecRow -> email_addr, 'Item Code Management');

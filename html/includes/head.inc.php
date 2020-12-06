@@ -13,4 +13,5 @@
 
 <!-- User Defined CSS -->
 <link rel="stylesheet" href="../asset/core/css/generic-style.css" />
+<link rel="stylesheet" href="../asset/core/css/loading-screen.component.css" />
 <link rel="stylesheet" href="../asset/core/css/custom-page-style.css" />

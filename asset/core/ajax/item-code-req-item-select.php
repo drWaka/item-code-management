@@ -72,7 +72,9 @@
           "conv" => '',
           "FK_item_categ" => '',
           "FK_item_group" => '',
-          "FK_itemcode_prefix" => ''
+          "FK_itemcode_prefix" => '',
+          "item_code" => '',
+          "unit_cost" => ''
         );
       }
 
@@ -136,6 +138,25 @@
               <input type="text" name="itemRecId" hidden="hidden" value="' . $itemRecId -> value . '">
             
               <div class="row">
+                <div class="col-sm-6">
+                  <div class="row">
+                     <label for="" class="text-left control-label col-sm-12">Item Code : </label>
+                    <div class="form-group col-sm-12">
+                      <input name="itemCode" class="form-control" value="' . $recRow['item_code'] . '" placeholder="Use For MPHHI Items Only">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <label for="" class="text-left control-label col-sm-12">Unit Cost : </label>
+                    <div class="form-group col-sm-12">
+                      <input name="unitCost" class="form-control" value="' . $recRow['unit_cost'] . '" placeholder="Unit Cost">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
                 <label for="" class="text-left control-label col-sm-12">Item Description : </label>
                 <div class="form-group col-sm-12">
                   <input name="itemDesc" class="form-control" placeholder="Item Description" value="' . $recRow['item_desc'] . '">
@@ -187,21 +208,22 @@
                 </div>
                 <div class="col-sm-4">
                   <div class="row">
-                    <label for="" class="text-left control-label col-sm-12">Item Category : </label>
-                    <div class="form-group col-sm-12">
-                      <select class="form-control" name="itemCateg">
-                        <option value="">Select Item Category</option>
-                        ' . $itemCategSelect . ' </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-4">
-                  <div class="row">
                     <label for="" class="text-left control-label col-sm-12">Item Group : </label>
                     <div class="form-group col-sm-12">
                       <select class="form-control" name="itemGrp">
                         <option value="">Select Item Group</option>
                         ' . $itemGrpSelect . ' </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="row">
+                    <label for="" class="text-left control-label col-sm-12">Item Category : </label>
+                    <div class="form-group col-sm-12">
+                      <select class="form-control" name="itemCateg">
+                        <option value="">Select Item Category</option>
+                        ' . $itemCategSelect . '
+                      </select>
                     </div>
                   </div>
                 </div>

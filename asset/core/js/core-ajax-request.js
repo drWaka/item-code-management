@@ -5,6 +5,7 @@ function send_request_asycn (url, method, data, container, transName, content_ty
     method : method,
     data : data,
     success : function(result) {
+      setTimeout(function() { manageLoading('hide'); }, 200);
       console.log(result);
       
       result = JSON.parse(result);
@@ -73,6 +74,9 @@ function send_request_asycn (url, method, data, container, transName, content_ty
         $('#transaction-modal').modal('show');
       }
     },
+    beforeSend : function () {
+      manageLoading('show');
+    },
     error : function () {
       console.log('Asynchronous Request Failed');
     }
@@ -124,3 +128,16 @@ $(document).on('click', '.btn-trigger', function() {
   // Transaction Success Trigger
   refreshList();
 });
+
+function manageLoading(flag) {
+  let loadingCover = document.querySelector('.loading-cover');
+  if (loadingCover != null) {
+    if (flag == 'show') {
+      if (loadingCover.className.indexOf('show') == -1) {
+        loadingCover.classList.add('show');
+      }
+    } else {
+      loadingCover.classList.remove('show');
+    }
+  }
+}

@@ -17,14 +17,11 @@
       SELECT b.stat_desc as status, a.ris_no as risNo, a.ris_img as ris_img, a.quot_img as quot_img
       FROM item_code_req as a
       INNER JOIN status as b ON b.PK_status = a.FK_request_stat
-      WHERE a.pk_item_code_req = "' . $requestId . '" AND a.FK_requestor = "' . $_SESSION['userId'] . '"
+      WHERE a.pk_item_code_req = "' . $requestId . '"
     ';
     $checkRecRes = $connection -> query($checkRecValid);
 
-    if (!($checkRecRes -> num_rows > 0)) {
-      // Record Doesn't Exist Or Record is not owned by the logged user
-      header('Location: index.php');
-    } else {
+    if ($checkRecRes -> num_rows > 0) {
       $requestRecRow = $checkRecRes -> fetch_assoc();
       if ($requestRecRow['status'] != 'saved') {
         $enableAdd = 'disabled';
