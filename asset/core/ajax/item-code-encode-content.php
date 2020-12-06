@@ -86,12 +86,44 @@
       if ($recResult -> num_rows > 0) {
         $content['totalRec'] = $recResult -> num_rows;
         while ($recRow = $recResult -> fetch_assoc()) {
-          $hidden = $recRow['encodeStat'] == 'encoded'
-            ? 'disabled'
-            : '';
+          $endcodeUnencodeBtn = '';
+          if ($recRow['encodeStat'] == 'encoded') {
+            $endcodeUnencodeBtn = '
+              <button 
+                class="btn btn-danger transaction-btn" 
+                title="Unencode Request" 
+                data-link="../asset/core/ajax/generic-warning-encode.php" 
+                data-target="modal-container" 
+                trans-name="modal-rec" 
+                data-content="{
+                  &quot;link&quot;        : &quot;../asset/core/ajax/item-code-encode-unencode.php&quot;,
+                  &quot;dataContent&quot; : {
+                    &quot;recordId&quot;    : &quot;' . $recRow['pk_item_code_req'] . '&quot;
+                  },
+                  &quot;headerTitle&quot; : &quot;Item Code Request&quot;,
+                  &quot;transactionType&quot; : &quot;unencode&quot;
+                }"><i class="fas fa-times"></i></button>
+            ';
+          } else {
+            $endcodeUnencodeBtn = '
+              <button 
+                class="btn btn-success transaction-btn" 
+                title="Encode Request" 
+                data-link="../asset/core/ajax/generic-warning-encode.php" 
+                data-target="modal-container" 
+                trans-name="modal-rec" 
+                data-content="{
+                  &quot;link&quot;        : &quot;../asset/core/ajax/item-code-encode-encode.php&quot;,
+                  &quot;dataContent&quot; : {
+                    &quot;recordId&quot;    : &quot;' . $recRow['pk_item_code_req'] . '&quot;
+                  },
+                  &quot;headerTitle&quot; : &quot;Item Code Request&quot;,
+                  &quot;transactionType&quot; : &quot;encode&quot;
+                }"><i class="fas fa-check"></i></button>
+            ';
+          }
 
           $classType;
-
           if ($recRow['encodeStat'] == 'pending') {
             $classType = 'rec-pending';
           } else {
@@ -119,14 +151,7 @@
                 data-targe="modal-container" data-content="{
                   &quot;recordId&quot; : &quot;' . $recRow['pk_item_code_req'] . '&quot;
                 }" trans-name="modal-rec" title="View Request"><i class="fas fa-file"></i></button>
-
-                <button class="btn btn-success transaction-btn ' . $hideEncodeBtn . '" title="Encode Request" data-link="../asset/core/ajax/generic-warning-encode.php" data-target="modal-container" trans-name="modal-rec" data-content="{
-                    &quot;link&quot;        : &quot;../asset/core/ajax/item-code-encode-encode.php&quot;,
-                    &quot;dataContent&quot; : {
-                      &quot;recordId&quot;    : &quot;' . $recRow['pk_item_code_req'] . '&quot;
-                    },
-                    &quot;headerTitle&quot; : &quot;Item Code Request&quot;
-                  }" ' . $hidden . '><i class="fas fa-check"></i></button>
+                ' . $endcodeUnencodeBtn . '
               </td>
             </tr>
           ';

@@ -84,12 +84,44 @@
       if ($recResult -> num_rows > 0) {
         $content['totalRec'] = $recResult -> num_rows;
         while ($recRow = $recResult -> fetch_assoc()) {
-          $hidden = $recRow['verifStat'] == 'verified'
-            ? 'disabled'
-            : '';
+          $postUnpostBtn = '';
+          if ($recRow['verifStat'] == 'verified') {
+            $postUnpostBtn = '
+              <button 
+                class="btn btn-danger transaction-btn" 
+                title="Unverify Request" 
+                data-link="../asset/core/ajax/generic-warning-verify.php" 
+                data-target="modal-container" 
+                trans-name="modal-rec" 
+                data-content="{
+                  &quot;link&quot;        : &quot;../asset/core/ajax/item-code-verify-unverify.php&quot;,
+                  &quot;dataContent&quot; : {
+                    &quot;recordId&quot;    : &quot;' . $recRow['pk_item_code_req'] . '&quot;
+                  },
+                  &quot;headerTitle&quot; : &quot;Item Code Request&quot;,
+                  &quot;transactionType&quot; : &quot;unverify&quot;
+                }"><i class="fas fa-times"></i></button>
+            ';
+          } else {
+            $postUnpostBtn = '
+              <button 
+                class="btn btn-success transaction-btn" 
+                title="Verify Request" 
+                data-link="../asset/core/ajax/generic-warning-verify.php" 
+                data-target="modal-container" 
+                trans-name="modal-rec" 
+                data-content="{
+                  &quot;link&quot;        : &quot;../asset/core/ajax/item-code-verify-verify.php&quot;,
+                  &quot;dataContent&quot; : {
+                    &quot;recordId&quot;    : &quot;' . $recRow['pk_item_code_req'] . '&quot;
+                  },
+                  &quot;headerTitle&quot; : &quot;Item Code Request&quot;,
+                  &quot;transactionType&quot; : &quot;verify&quot;
+                }"><i class="fas fa-check"></i></button>
+            ';
+          }
 
-          $classType;
-
+          $classType = '';
           if ($recRow['verifStat'] == 'pending') {
             $classType = 'rec-pending';
           } else {
@@ -116,14 +148,7 @@
                 data-targe="modal-container" data-content="{
                   &quot;recordId&quot; : &quot;' . $recRow['pk_item_code_req'] . '&quot;
                 }" trans-name="modal-rec" title="View Request"><i class="fas fa-file"></i></button>
-
-                <button class="btn btn-success transaction-btn" title="Verify Request" data-link="../asset/core/ajax/generic-warning-verify.php" data-target="modal-container" trans-name="modal-rec" data-content="{
-                    &quot;link&quot;        : &quot;../asset/core/ajax/item-code-verify-verify.php&quot;,
-                    &quot;dataContent&quot; : {
-                      &quot;recordId&quot;    : &quot;' . $recRow['pk_item_code_req'] . '&quot;
-                    },
-                    &quot;headerTitle&quot; : &quot;Item Code Request&quot;
-                  }" ' . $hidden . '><i class="fas fa-check"></i></button>
+                ' . $postUnpostBtn . '
               </td>
             </tr>
           ';

@@ -35,6 +35,9 @@
     <?php require_once 'includes/head.inc.php'; ?>    
   </head>
   <body>
+    <div class="loading-cover">
+      <img class="load-icon" src="../asset/core/img/icon/load-icon.svg" alt="loading icon">
+    </div>
     <div class="app">
       <div class="app-body">
 

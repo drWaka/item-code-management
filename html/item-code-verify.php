@@ -15,6 +15,9 @@
     <?php require_once 'includes/head.inc.php'; ?>
   </head>
   <body>
+    <div class="loading-cover">
+      <img class="load-icon" src="../asset/core/img/icon/load-icon.svg" alt="loading icon">
+    </div>
     <div class="app">
       <div class="app-body">
 
@@ -245,7 +248,7 @@
         $(document).on('click','[name="useDateRng"]' , function(){
           let dateRngMin = document.querySelector('[name="dateRngMin"]');
           let dateRngMax = document.querySelector('[name="dateRngMax"]');
-          let checked = (document.querySelector('[name="useIdRng"]')).checked ? 1 : 0;
+          let checked = (document.querySelector('[name="useDateRng"]')).checked ? 1 : 0;
           if (checked) {
             dateRngMin.removeAttribute('disabled');
             dateRngMax.removeAttribute('disabled');
