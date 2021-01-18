@@ -54,6 +54,7 @@
                       <th>User Type</th>
                       <th>Account Status</th>
                       <th>Actions</th>
+                      <th>Access Mgmt</th>
                     </tr>
                   </thead>
                   <tbody class="record-container">

@@ -50,6 +50,11 @@
                     &quot;userId&quot; : &quot;' . $recRow['PK_sys_user'] . '&quot;
                   }"><i class="fas fa-pencil-alt"></i></button>
               </td>
+              <td>
+                <button class="btn btn-info transaction-btn" title="User Access" data-link="../asset/core/ajax/user-access-mgmt-select.php" data-target="modal-container" trans-name="modal-rec" data-content="{
+                    &quot;userId&quot; : &quot;' . $recRow['PK_sys_user'] . '&quot;
+                  }"><i class="fas fa-user-plus"></i></button>
+              </td>
             </tr>
           ';
         }
